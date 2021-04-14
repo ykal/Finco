@@ -1,17 +1,21 @@
 package banking;
 
+import banking.models.BankingAccount;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
 import framework.controllers.commands.*;
+import framework.controllers.commands.AbstractAction;
 import framework.controllers.results.IResult;
 import framework.controllers.ruleengine.AbstractAssessor;
 import framework.controllers.ruleengine.IProperty;
 import framework.controllers.ruleengine.Rule;
 import framework.models.account.Account;
 import framework.models.account.Entry;
+import framework.models.account.IEntry;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 
 public class BankController extends Controller {
 	private CommandManager commandManager;
@@ -56,7 +60,17 @@ public class BankController extends Controller {
 		runNotifyRule(entry, account, result);
 	}
 
-	private void runNotifyRule(Entry entry, Account account, IResult result) {
+	@Override
+	protected void addAccount() {
+	}
+
+	@Override
+	protected void addInterest() {
+		AbstractAction action = new AddInterest(view.accFile);
+		IResult result = commandManager.submit(action);
+	}
+
+	private void runNotifyRule(IEntry entry, Account account, IResult result) {
 		IProperty property = new NotifyProperty(entry, result,
 				account.getOwner().getCustomerType());
 		AbstractAssessor<IProperty> assessor = new NotifyAssessor(property);
@@ -99,7 +113,7 @@ public class BankController extends Controller {
 	{
 		// get selected name
 		int selection = this.view.app.getTableSelection();
-		if (selection >=0){
+		if (selection >= 0){
 			String accnr = (String)this.view.model.getValueAt(selection, 0);
 
 			//Show the dialog for adding deposit amount for the current mane
@@ -107,8 +121,9 @@ public class BankController extends Controller {
 			dep.setBounds(430, 15, 275, 140);
 			dep.show();
 
-			// TODO :: call controller.deposit
-			// this.deposit(entry, account);
+			IEntry entry = new Entry(view.amountDeposit, LocalDate.now());
+			Account account = view.accFile.get((Account a) -> a.getId().equals(accnr));
+			deposit(entry, account);
 		}
 
 
@@ -118,7 +133,7 @@ public class BankController extends Controller {
 	{
 		// get selected name
 		int selection = this.view.app.getTableSelection();
-		if (selection >=0){
+		if (selection >=0) {
 			String accnr = (String)this.view.model.getValueAt(selection, 0);
 
 			//Show the dialog for adding withdraw amount for the current mane
@@ -126,8 +141,9 @@ public class BankController extends Controller {
 			wd.setBounds(430, 15, 275, 140);
 			wd.show();
 
-			// TODO :: call controller.withdraw
-			//this.withdraw(entry, account);
+			IEntry entry = new Entry(view.amountDeposit, LocalDate.now());
+			Account account = view.accFile.get((Account a) -> a.getId().equals(accnr));
+			withdraw(entry, account);
 		}
 
 
@@ -135,7 +151,10 @@ public class BankController extends Controller {
 
 	void JButtonAddinterest_actionPerformed(ActionEvent event)
 	{
-		JOptionPane.showMessageDialog(this.view.JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
-
+		JOptionPane.showMessageDialog(this.view.JButton_Addinterest,
+				"Add interest to all accounts",
+				"Add interest to all accounts",
+				JOptionPane.WARNING_MESSAGE);
+		addInterest();
 	}
 }
