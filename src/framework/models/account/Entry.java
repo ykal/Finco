@@ -2,8 +2,8 @@ package framework.models.account;
 
 import java.time.LocalDate;
 
-public class Entry {
-	private Float amount;
+public class Entry implements IEntry{
+	private double amount;
 	private LocalDate date;
 
 	public Float getAmount() {
