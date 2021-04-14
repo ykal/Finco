@@ -1,19 +1,49 @@
 package framework.models.account;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import framework.models.customer.*;
 
-public class Account {
+public abstract class Account {
+	private Integer id;
+	private Double currentBalance;
 	private ICustomer owner;
+	private List<IEntry> entries;
 
-	public void addEntry(Entry entry) {
-//		TODO add amount to this account.
+	public Account() {
+		entries = new ArrayList();
 	}
 
-	public double getBalance() {
-		throw new RuntimeException("getBalance Not implemented yet");
+	public abstract void addInterest();
+	public abstract Double getInterest();
+
+	public void addEntry(IEntry entry) {
+		this.entries.add(entry);
 	}
 
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Double getCurrentBalance() {
+		return currentBalance;
+	}
+	public void setCurrentBalance(Double balance) {
+		this.currentBalance = balance;
+	}
 	public ICustomer getOwner() {
 		return owner;
+	}
+	public void setOwner(ICustomer owner) {
+		this.owner = owner;
+	}
+	public List<IEntry> getEntries() {
+		return entries;
+	}
+	public void setEntries(List<IEntry> entries) {
+		this.entries = entries;
 	}
 }
