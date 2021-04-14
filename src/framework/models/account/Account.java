@@ -8,3 +8,7 @@ public class Account {
 	public void addEntry(Entry entry) {
 //		TODO add amount to this account.
 	}
+
+	public double getBalance() {
+		throw new RuntimeException("getBalance Not implemented yet");
+	}
