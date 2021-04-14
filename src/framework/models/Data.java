@@ -11,4 +11,9 @@ public class Data extends DefaultTableModel {
     void setColumn(Vector<?> columnNames) {
         columnNames.forEach(columnName -> this.addColumn(columnName));
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

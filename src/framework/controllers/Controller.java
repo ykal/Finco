@@ -23,12 +23,8 @@ public abstract class Controller implements ActionListener {
 
 	protected abstract void withdraw(IEntry entry, Account account);
 
-	protected void addInterest(){
-//		TODO
-	}
+	protected abstract void addInterest();
 
-	protected void addAccount() {
-//		TODO
-	}
+	protected abstract void addAccount(String ctype);
 
 }

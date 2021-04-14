@@ -3,7 +3,7 @@ package banking.models;
 public class CheckingAccount extends BankingAccount {
 	private double interest = 0.01;
 
-	public CheckingAccount(String accnr) {
+	CheckingAccount(String accnr) {
 		setId(accnr);
 	}
 
