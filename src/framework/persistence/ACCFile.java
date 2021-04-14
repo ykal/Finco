@@ -51,13 +51,7 @@ public class ACCFile implements Observable {
 	}
 
 	@Override
-	public void notifyObservers() {
+	public abstract void notifyObservers();
 
-		System.out.println("Notify is called");
-		Data data = new Data();
-		data.addColumn("Account");
-		data.addColumn("Email");
-		accounts.forEach(account -> data.addRow(new Object[]{account.getId(), account.getOwner().getEmail()}));
-		observers.forEach((Observer o) -> o.update(data));
-	}
+	public abstract void updateAccount(Account account);
 }

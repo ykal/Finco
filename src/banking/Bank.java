@@ -39,7 +39,7 @@ public class Bank implements Observer {
 		commandManager = new CommandManager();
 		bankController = new BankController(commandManager, this);
 		repFile = new REPFile();
-		accFile = new ACCFile();
+		accFile = new BankAccFile(this);
 		cusFile = new CUSFile();
 		model = new Data();
 		populateModelColumns();
