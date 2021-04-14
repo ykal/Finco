@@ -31,6 +31,7 @@ public class Bank {
 	}
 
 	private void addOperationButtons(FinCo app, Data model) {
+		// create operation buttons
 		JButton_PerAC.setText("Add personal account");
 		JButton_PerAC.setBounds(24,20,192,33);
 		JButton_CompAC.setText("Add company account");
@@ -42,121 +43,19 @@ public class Bank {
 		JButton_Addinterest.setBounds(448,20,106,33);
 		JButton_Addinterest.setText("Add interest");
 		JButton_Withdraw.setBounds(468,164,96,33);
+
+		// add butons to FinCo
 		app.addComponent(JButton_PerAC);
 		app.addComponent(JButton_CompAC);
 		app.addComponent(JButton_Deposit);
 		app.addComponent(JButton_Withdraw);
 		app.addComponent(JButton_Addinterest);
-		SymAction lSymAction = new SymAction();
-		JButton_PerAC.addActionListener(lSymAction);
-		JButton_CompAC.addActionListener(lSymAction);
-		JButton_Deposit.addActionListener(lSymAction);
-		JButton_Withdraw.addActionListener(lSymAction);
-		JButton_Addinterest.addActionListener(lSymAction);
-	}
 
-	private static void createAddPersonalAccButtn(FinCo app, Data model) {
-		JButton JButton_PerAC = new JButton("Add personal account");
-		JButton_PerAC.setBounds(24,20,192,33);
-		JButton_PerAC.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				model.addRow(new Object[]{"Test", 23414});
-				System.out.println(app.getTableSelection());
-			}
-		});
-		app.addComponent(JButton_PerAC);
-	}
-
-	class SymAction implements java.awt.event.ActionListener
-	{
-		public void actionPerformed(ActionEvent event)
-		{
-			Object object = event.getSource();
-			if (object == JButton_PerAC)
-				JButtonPerAC_actionPerformed(event);
-			else if (object == JButton_CompAC)
-				JButtonCompAC_actionPerformed(event);
-			else if (object == JButton_Deposit)
-				JButtonDeposit_actionPerformed(event);
-			else if (object == JButton_Withdraw)
-				JButtonWithdraw_actionPerformed(event);
-			else if (object == JButton_Addinterest)
-				JButtonAddinterest_actionPerformed(event);
-
-		}
-	}
-
-	void JButtonPerAC_actionPerformed(ActionEvent event)
-	{
-		/*
-		 JDialog_AddPAcc type object is for adding personal information
-		 construct a JDialog_AddPAcc type object
-		 set the boundaries and show it
-		*/
-
-		JDialog_AddPAcc pac = new JDialog_AddPAcc(this);
-		pac.setBounds(450, 20, 300, 330);
-		pac.show();
-
-		// Todo:: call controller.addAccount
-	}
-
-	void JButtonCompAC_actionPerformed(ActionEvent event)
-	{
-		/*
-		 construct a JDialog_AddCompAcc type object
-		 set the boundaries and
-		 show it
-		*/
-
-		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(this);
-		pac.setBounds(450, 20, 300, 330);
-		pac.show();
-
-		// Todo :: call controller.addCompanyAccount
-
-	}
-
-	void JButtonDeposit_actionPerformed(ActionEvent event)
-	{
-		// get selected name
-		int selection = this.app.getTableSelection();
-		if (selection >=0){
-			String accnr = (String)this.model.getValueAt(selection, 0);
-
-			//Show the dialog for adding deposit amount for the current mane
-			JDialog_Deposit dep = new JDialog_Deposit(this,accnr);
-			dep.setBounds(430, 15, 275, 140);
-			dep.show();
-
-			// TODO :: call controller.deposit
-		}
-
-
-	}
-
-	void JButtonWithdraw_actionPerformed(ActionEvent event)
-	{
-		// get selected name
-		int selection = this.app.getTableSelection();
-		if (selection >=0){
-			String accnr = (String)model.getValueAt(selection, 0);
-
-			//Show the dialog for adding withdraw amount for the current mane
-			JDialog_Withdraw wd = new JDialog_Withdraw(this,accnr);
-			wd.setBounds(430, 15, 275, 140);
-			wd.show();
-
-			// TODO :: call controller.withdraw
-		}
-
-
-	}
-
-	void JButtonAddinterest_actionPerformed(ActionEvent event)
-	{
-		JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts","Add interest to all accounts",JOptionPane.WARNING_MESSAGE);
-
+		// add action listener
+		JButton_PerAC.addActionListener(bankController);
+		JButton_CompAC.addActionListener(bankController);
+		JButton_Deposit.addActionListener(bankController);
+		JButton_Withdraw.addActionListener(bankController);
+		JButton_Addinterest.addActionListener(bankController);
 	}
 }
