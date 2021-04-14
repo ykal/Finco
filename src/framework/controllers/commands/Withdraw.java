@@ -19,9 +19,9 @@ public class Withdraw extends LoggableAction {
 //		 should be replaced with more graceful code.
 		entry.setAmount(-1 * entry.getAmount());
 		account.addEntry(entry);
-		if (account.getBalance() < 0)
-			return new CurrentBalance(account.getBalance(), CurrentBalance.NEGATIVE_BALANCE);
-		return new CurrentBalance(account.getBalance(), CurrentBalance.SUCCESS);
+		if (account.getCurrentBalance() < 0)
+			return new CurrentBalance(account.getCurrentBalance(), CurrentBalance.NEGATIVE_BALANCE);
+		return new CurrentBalance(account.getCurrentBalance(), CurrentBalance.SUCCESS);
 	}
 
 	@Override

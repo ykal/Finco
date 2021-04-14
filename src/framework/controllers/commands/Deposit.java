@@ -20,7 +20,7 @@ public class Deposit extends LoggableAction {
 	public IResult execute() {
 		account.addEntry(entry);
 		// TODO check if result should be something else. such as if negetive.
-		return new CurrentBalance(account.getBalance(), CurrentBalance.SUCCESS);
+		return new CurrentBalance(account.getCurrentBalance(), CurrentBalance.SUCCESS);
 	}
 
 	public IEntry getEntry() {
