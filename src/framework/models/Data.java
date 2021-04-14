@@ -1,6 +1,14 @@
 package framework.models;
 
 import javax.swing.table.DefaultTableModel;
+import java.util.Vector;
 
-public abstract class Data extends DefaultTableModel {
+public class Data extends DefaultTableModel {
+    /**
+     * Populate model column names
+     * @param columnNames
+     */
+    void setColumn(Vector<?> columnNames) {
+        columnNames.forEach(columnName -> this.addColumn(columnName));
+    }
 }
