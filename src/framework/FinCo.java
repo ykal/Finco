@@ -2,6 +2,7 @@ package framework;
 
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
+import framework.models.Data;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,11 +15,11 @@ public class FinCo extends JFrame{
 	private Controller controller;
 	private CommandManager commandManager;
 
-	private DefaultTableModel model;
+	private Data model;
 	private JTable JTable1;
 	private JScrollPane JScrollPane1;
-	FinCo parentFrame;
 
+	FinCo parentFrame;
 	JPanel JPanel1 = new JPanel();
 	JButton JButton_Exit = new JButton();
 
@@ -96,7 +97,6 @@ public class FinCo extends JFrame{
 	public FinCo(Controller controller, CommandManager cm) {
 		this.controller = controller;
 		this.commandManager = cm;
-		// TODO attach controller as an action listener to GUI
 	}
 
 	public void start() {
