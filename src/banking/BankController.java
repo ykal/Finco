@@ -1,9 +1,6 @@
 package banking;
 
-import banking.models.BankingAccount;
-import banking.models.BankingAccountFactory;
-import banking.models.CheckingAccount;
-import banking.models.CheckingAccountFactory;
+import banking.models.*;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
 import framework.controllers.commands.*;
@@ -14,6 +11,7 @@ import framework.controllers.ruleengine.IProperty;
 import framework.controllers.ruleengine.Rule;
 import framework.models.account.Account;
 import framework.models.account.Entry;
+import framework.models.account.IAccount;
 import framework.models.account.IEntry;
 import framework.models.customer.CompanyFactory;
 import framework.models.customer.Customer;
@@ -32,6 +30,10 @@ public class BankController extends Controller {
 	public BankController(CommandManager commandManager, Bank view) {
 		this.commandManager = commandManager;
 		this.view = view;
+	}
+
+	public static BankingAccountFactory getFactory(String accountType) {
+		return accountType.equals(BankingAccount.TYPE_CHECKING) ? new CheckingAccountFactory() : new SavingAccountFactory();
 	}
 
 	public void actionPerformed(ActionEvent event)
@@ -70,7 +72,7 @@ public class BankController extends Controller {
 
 	@Override
 	protected void addAccount(String ctype) {
-		BankingAccountFactory bankingAccountFactory = new CheckingAccountFactory();
+		BankingAccountFactory bankingAccountFactory = getFactory(view.accountType);
 		Account account = bankingAccountFactory.createAccount(view.accountnr);
 		Customer customer = view.cusFile.get((Customer c) -> c.getEmail().equals(view.email));
 		if (customer == null) {
@@ -78,7 +80,11 @@ public class BankController extends Controller {
 					PersonFactory.createCustomer() :
 					CompanyFactory.createCustomer();
 		}
+		// TODO :: refactor them with constructor to take all properties
 		customer.setEmail(view.email);
+		customer.setCity(view.city);
+		customer.setName(view.clientName);
+		customer.addAccount((IAccount) account);
 		account.setOwner(customer);
 		view.accFile.addAccount(account);
 	}

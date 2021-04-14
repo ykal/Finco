@@ -1,5 +1,6 @@
 package framework.models.customer;
 
+import java.util.ArrayList;
 import java.util.List;
 import framework.models.account.IAccount;
 
@@ -11,6 +12,21 @@ public abstract class Customer implements ICustomer {
 	private String zip;
 	private String email;
 	private List<IAccount> accounts;
+
+	// Default constructor
+	public Customer(){
+		accounts = new ArrayList<>();
+	}
+
+	public Customer(String name, String street, String city, String state, String zip, String email) {
+		this.name = name;
+		this.street = street;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+		this.email = email;
+		accounts = new ArrayList<>();
+	}
 
 	public void addAccount(IAccount account) {
 		this.accounts.add(account);

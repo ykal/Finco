@@ -1,6 +1,7 @@
 package banking.models;
 
 public class CheckingAccount extends BankingAccount {
+
 	private double interest = 0.01;
 
 	CheckingAccount(String accnr) {
@@ -17,4 +18,10 @@ public class CheckingAccount extends BankingAccount {
 	public double getInterest() {
 		return interest;
 	}
+
+	@Override
+	public String getAccountType() {
+		return TYPE_CHECKING;
+	}
+
 }

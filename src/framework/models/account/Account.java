@@ -5,7 +5,7 @@ import java.util.List;
 
 import framework.models.customer.*;
 
-public abstract class Account {
+public abstract class Account implements IAccount{
 	private String id;
 	private double currentBalance;
 	private Customer owner;
@@ -13,10 +13,8 @@ public abstract class Account {
 
 	public Account() {
 		entries = new ArrayList();
+		currentBalance = 0;
 	}
-
-	public abstract void addInterest();
-	public abstract double getInterest();
 
 	public void addEntry(IEntry entry) {
 		currentBalance += entry.getAmount();
