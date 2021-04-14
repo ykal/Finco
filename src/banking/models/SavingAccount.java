@@ -17,4 +17,10 @@ public class SavingAccount extends BankingAccount {
 	public double getInterest() {
 		return interest;
 	}
+
+	@Override
+	public String getAccountType() {
+		return TYPE_SAVING;
+	}
+
 }
