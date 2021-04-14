@@ -2,6 +2,6 @@ package framework.models.customer;
 
 public interface IPerson extends ICustomer{
 	public default String getCustomerType(){
-		return "Person";
+		return ICustomer.PERSON;
 	}
 }
