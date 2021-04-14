@@ -1,6 +1,8 @@
 package banking;
 
 import framework.FinCo;
+import framework.controllers.CommandManager;
+import framework.controllers.Controller;
 import framework.models.Data;
 
 import javax.swing.*;
@@ -16,14 +18,20 @@ public class Bank {
 	JButton JButton_Withdraw = new JButton();
 	JButton JButton_Addinterest= new JButton();
 	Data model;
+	CommandManager commandManager;
+	BankController bankController;
 	FinCo app;
 
+
 	public Bank() {
+		commandManager = new CommandManager();
+		bankController = new BankController(commandManager, this);
 		model = new Data();
 		model.addColumn("First");
 		model.addColumn("Second");
 		app = new FinCo("Banking Application", model);
 		addOperationButtons(app, model);
+
 	}
 
 	static public void main(String args[]){

@@ -3,7 +3,7 @@ package framework.models.customer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Company extends Customer implements ICustomer {
+public class Company extends Customer implements ICompany {
 //	private Integer numberOfEmployees;
 	private List<Person> employees;
 
