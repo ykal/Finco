@@ -63,35 +63,6 @@ public class FinCo extends JFrame{
 		this.addWindowListener(aSymWindow);
 	}
 
-	public void start() {
-		try {
-			// Add the following code if you want the Look and Feel
-			// to be set to the Look and Feel of the native system.
-
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (Exception e) {
-			}
-
-			// Create a new instance of our application's frame, and make it visible.
-			this.setVisible(true);
-		} catch (Throwable t) {
-			t.printStackTrace();
-			// Ensure the application exits with an error condition.
-			System.out.println(t.getMessage() + "Error");
-			System.exit(1);
-		}
-	}
-
-	void exitApplication() {
-		try {
-			this.setVisible(false); // hide the Frame
-			this.dispose(); // free the system resources
-			System.exit(0); // close the application
-		} catch (Exception e) {
-		}
-	}
-
 	class SymWindow extends java.awt.event.WindowAdapter {
 		public void windowClosing(WindowEvent event) {
 			Object object = event.getSource();
@@ -113,6 +84,44 @@ public class FinCo extends JFrame{
 		}
 	}
 
+	void exitApplication() {
+		try {
+			this.setVisible(false); // hide the Frame
+			this.dispose(); // free the system resources
+			System.exit(0); // close the application
+		} catch (Exception e) {
+		}
+	}
+
+	public FinCo(Controller controller, CommandManager cm) {
+		this.controller = controller;
+		this.commandManager = cm;
+		// TODO attach controller as an action listener to GUI
+	}
+
+	public void start() {
+		try {
+			// Add the following code if you want the Look and Feel
+			// to be set to the Look and Feel of the native system.
+
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception e) {
+			}
+
+			// Create a new instance of our application's frame, and make it visible.
+			this.setVisible(true);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			// Ensure the application exits with an error condition.
+			System.out.println(t.getMessage() + "Error");
+			System.exit(1);
+		}
+	}
+
+	public void addComponent(Component component) {
+		this.JPanel1.add(component);
+	}
 
 	public static void main(String[] args) {
 		FinCo app = new FinCo("Finco", new DefaultTableModel());
