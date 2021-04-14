@@ -12,3 +12,8 @@ public class Account {
 	public double getBalance() {
 		throw new RuntimeException("getBalance Not implemented yet");
 	}
+
+	public ICustomer getOwner() {
+		return owner;
+	}
+}
