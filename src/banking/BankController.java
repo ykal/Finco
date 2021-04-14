@@ -39,18 +39,19 @@ public class BankController extends Controller {
 	}
 
 	@Override
-	protected void deposit(Entry entry, Account account){
+	protected void deposit(IEntry entry, Account account){
 		LoggableAction deposit = new Deposit(entry, account);
-		deposit = new Proxy(deposit);
+		System.out.println("Empty Reports :\n" + view.repFile.toString());
+		deposit = new Proxy(deposit, view.repFile);
 		IResult result = commandManager.submit(deposit);
 		System.out.println("One Report Added :\n" + view.repFile.toString());
 		runNotifyRule(entry, account, result);
 	}
 
 	@Override
-	protected void withdraw(Entry entry, Account account){
+	protected void withdraw(IEntry entry, Account account){
 		LoggableAction withdraw = new Withdraw(entry, account);
-		withdraw = new Proxy(withdraw);
+		withdraw = new Proxy(withdraw, view.repFile);
 		IResult result = commandManager.submit(withdraw);
 		runNotifyRule(entry, account, result);
 	}
