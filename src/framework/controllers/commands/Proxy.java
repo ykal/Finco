@@ -3,6 +3,7 @@ package framework.controllers.commands;
 import framework.controllers.results.IResult;
 import framework.models.account.Account;
 import framework.models.account.Entry;
+import framework.models.account.IEntry;
 
 public class Proxy extends LoggableAction {
 	private LoggableAction laction;
@@ -19,7 +20,7 @@ public class Proxy extends LoggableAction {
 	}
 
 	@Override
-	Entry getEntry() {
+	IEntry getEntry() {
 		return laction.getEntry();
 	}
 
