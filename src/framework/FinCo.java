@@ -123,6 +123,10 @@ public class FinCo extends JFrame{
 		this.JPanel1.add(component);
 	}
 
+	public int getTableSelection() {
+		return this.JTable1.getSelectionModel().getMinSelectionIndex();
+	}
+
 	public static void main(String[] args) {
 		FinCo app = new FinCo("Finco", new DefaultTableModel());
 		app.start();
