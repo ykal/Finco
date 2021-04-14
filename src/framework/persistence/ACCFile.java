@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class ACCFile implements Observable {
-	private List<Account> accounts;
-	private List<Observer> observers=new ArrayList<>();
+public abstract class ACCFile implements Observable {
+	protected List<Account> accounts;
+	protected List<Observer> observers=new ArrayList<>();
 
 	public ACCFile() {
 		accounts = new ArrayList();
@@ -23,6 +23,18 @@ public class ACCFile implements Observable {
 
 	public void addAccount(Account account) {
 		this.accounts.add(account);
+		notifyObservers();
+	}
+
+	public void removeAccount(String id) {
+		for (Account a :
+				accounts) {
+			if (a.getId().equals(id)) {
+				accounts.remove(a);
+				System.out.println("removing");
+				break;
+			}
+		}
 		notifyObservers();
 	}
 
