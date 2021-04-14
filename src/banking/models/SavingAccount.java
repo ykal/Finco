@@ -1,16 +1,16 @@
 package banking.models;
 
 public class SavingAccount extends BankingAccount {
-	private Double interest = 0.0325;
+	private double interest = 0.0325;
 
 	public void addInterest() {
-		Double currentBalance = super.getCurrentBalance();
-		Double newBalance = currentBalance + (currentBalance*interest);
+		double currentBalance = super.getCurrentBalance();
+		double newBalance = currentBalance + (currentBalance*interest);
 		super.setCurrentBalance(newBalance);
 	}
 
 	@Override
-	public Double getInterest() {
+	public double getInterest() {
 		return interest;
 	}
 }

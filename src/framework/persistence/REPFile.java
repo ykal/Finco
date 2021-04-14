@@ -1,9 +1,8 @@
-package framework.models.persistence;
+package framework.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import framework.controllers.results.IResult;
 import framework.models.account.Report;
 
 public class REPFile {
@@ -13,11 +12,19 @@ public class REPFile {
 		reports = new ArrayList<>();
 	}
 
-	public IResult addReport(Report report) {
-		return null;
+	public void addReport(Report report) {
+		reports.add(report);
 	}
 
 	public List<Report> genReport() {
 		return null;
+	}
+
+	@Override
+	public String toString() {
+		return reports.stream()
+				.map(report -> report.toString())
+				.reduce((x, y) -> x + y)
+				.orElse("");
 	}
 }

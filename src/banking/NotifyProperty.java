@@ -1,23 +1,23 @@
 package banking;
 
-import framework.controllers.results.CurrentBalance;
 import framework.controllers.results.IResult;
 import framework.controllers.ruleengine.IProperty;
 import framework.models.account.Entry;
+import framework.models.account.IEntry;
 
 public class NotifyProperty implements IProperty{
-	private Entry entry;
+	private IEntry entry;
 	private IResult result;
 	private String customerType;
 
-	public NotifyProperty(Entry entry, IResult result, String customerType) {
+	public NotifyProperty(IEntry entry, IResult result, String customerType) {
 		this.entry = entry;
 		this.result = result;
 		this.customerType = customerType;
 	}
 
 	@Override
-	public Entry getEntry() {
+	public IEntry getEntry() {
 		return entry;
 	}
 

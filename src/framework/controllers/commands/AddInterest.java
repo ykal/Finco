@@ -2,7 +2,7 @@ package framework.controllers.commands;
 
 import framework.controllers.results.CurrentBalance;
 import framework.controllers.results.IResult;
-import framework.models.persistence.ACCFile;
+import framework.persistence.ACCFile;
 import framework.models.account.Account;
 
 import java.util.function.Consumer;

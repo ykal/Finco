@@ -2,14 +2,17 @@ package framework.controllers.commands;
 
 import framework.controllers.results.IResult;
 import framework.models.account.Account;
-import framework.models.account.Entry;
 import framework.models.account.IEntry;
+import framework.models.account.Report;
+import framework.persistence.REPFile;
 
 public class Proxy extends LoggableAction {
 	private LoggableAction laction;
-	public Proxy(LoggableAction laction) {
+	private REPFile repFile;
+	public Proxy(LoggableAction laction, REPFile repFile) {
 		super();
 		this.laction = laction;
+		this.repFile = repFile;
 	}
 
 	@Override
@@ -30,6 +33,9 @@ public class Proxy extends LoggableAction {
 	}
 
 	private void addToHistory(IResult result) {
-//		TODO create new Report[using result and entry] and add to REPFile.
+		Report report = new Report(laction.getEntry().getAmount(),
+				laction.getAccount().getId(),
+				laction.getEntry().getDate());
+		repFile.addReport(report);
 	}
 }

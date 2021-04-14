@@ -6,8 +6,8 @@ import java.util.List;
 import framework.models.customer.*;
 
 public abstract class Account {
-	private Integer id;
-	private Double currentBalance;
+	private String id;
+	private double currentBalance;
 	private ICustomer owner;
 	private List<IEntry> entries;
 
@@ -16,22 +16,23 @@ public abstract class Account {
 	}
 
 	public abstract void addInterest();
-	public abstract Double getInterest();
+	public abstract double getInterest();
 
 	public void addEntry(IEntry entry) {
+		currentBalance += entry.getAmount();
 		this.entries.add(entry);
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public Double getCurrentBalance() {
+	public double getCurrentBalance() {
 		return currentBalance;
 	}
-	public void setCurrentBalance(Double balance) {
+	public void setCurrentBalance(double balance) {
 		this.currentBalance = balance;
 	}
 	public ICustomer getOwner() {

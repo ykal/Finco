@@ -18,6 +18,7 @@ public class Deposit extends LoggableAction {
 
 	@Override
 	public IResult execute() {
+		System.out.println("Deposit called with account: " + account.getId() + " amount: " + entry.getAmount());
 		account.addEntry(entry);
 		// TODO check if result should be something else. such as if negetive.
 		return new CurrentBalance(account.getCurrentBalance(), CurrentBalance.SUCCESS);
