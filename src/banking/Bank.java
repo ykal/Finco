@@ -1,14 +1,22 @@
 package banking;
 
+import banking.models.CheckingAccount;
 import framework.FinCo;
 import framework.controllers.CommandManager;
 import framework.models.Data;
+import framework.models.account.Account;
+import framework.models.customer.Customer;
+import framework.models.customer.Person;
+import framework.persistence.ACCFile;
+import framework.persistence.CUSFile;
+import framework.persistence.REPFile;
 
 import javax.swing.*;
 
 public class Bank {
 
-	String accountnr, clientName,street,city,zip,state,accountType,clientType,amountDeposit;
+	String accountnr, clientName,street,city,zip,state,accountType,clientType;
+	double amountDeposit;
 	JButton JButton_PerAC = new JButton();
 	JButton JButton_CompAC = new JButton();
 	JButton JButton_Deposit = new JButton();
@@ -18,9 +26,15 @@ public class Bank {
 	FinCo app;
 	BankController bankController;
 	CommandManager commandManager;
+	REPFile repFile;
+	ACCFile accFile;
+	CUSFile cusFile;
 
 	public Bank() {
+		commandManager = new CommandManager();
 		bankController = new BankController(commandManager, this);
+		repFile = new REPFile();
+		accFile = new ACCFile();
 		Account account = new CheckingAccount("some shit");
 		Customer customer = new Person();
 		account.setOwner(customer);
