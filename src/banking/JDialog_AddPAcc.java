@@ -3,6 +3,7 @@ package banking;
 		A basic implementation of the JDialog class.
 **/
 
+import banking.models.BankingAccount;
 import framework.FinCo;
 
 import java.awt.*;
@@ -182,9 +183,9 @@ public class JDialog_AddPAcc extends JDialog
        parentframe.state=JTextField_ST.getText();
        parentframe.email = JTextField_EM.getText();
        if (JRadioButton_Chk.isSelected())
-           parentframe.accountType="Ch";
+           parentframe.accountType= BankingAccount.TYPE_CHECKING;
            else
-           parentframe.accountType="S";
+           parentframe.accountType=BankingAccount.TYPE_SAVING;
        dispose();
 	}
 

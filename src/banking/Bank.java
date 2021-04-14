@@ -15,6 +15,8 @@ import framework.persistence.CUSFile;
 import framework.persistence.REPFile;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.Vector;
 
 public class Bank implements Observer {
 
@@ -38,27 +40,29 @@ public class Bank implements Observer {
 		bankController = new BankController(commandManager, this);
 		repFile = new REPFile();
 		accFile = new ACCFile();
-		BankingAccountFactory accountFactory = new CheckingAccountFactory();
-		Account account = accountFactory.createAccount("some shit");
-		Customer customer = new Person();
-		customer.setEmail("someemail");
-		account.setOwner(customer);
-		accFile.addAccount(account);
 		cusFile = new CUSFile();
 		model = new Data();
-		model.addColumn("Account");
-		model.addColumn("Email");
-//		model.addRow(new Object[]{"some shit", "another shit"});
+		populateModelColumns();
 		app = new FinCo("Banking Application", model);
 		addOperationButtons(app, model);
 		accFile.attach(this);
+	}
+
+	private void populateModelColumns() {
+		model.addColumn("AccountNr");
+		model.addColumn("Email");
+		model.addColumn("Name");
+		model.addColumn("City");
+		model.addColumn("P/C");
+		model.addColumn("Ch/S");
+		model.addColumn("Amount");
 	}
 
 	static public void main(String args[]){
 		(new Bank()).app.start();
 	}
 
-	private void addOperationButtons(FinCo app, Data model) {
+	private void addOperationButtons(FinCo app, DefaultTableModel model) {
 		// create operation buttons
 		JButton_PerAC.setText("Add personal account");
 		JButton_PerAC.setBounds(24,20,192,33);
