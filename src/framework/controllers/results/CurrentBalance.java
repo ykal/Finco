@@ -1,6 +1,6 @@
 package framework.controllers.results;
 
-public class CurrentBalance implements IResult<double> {
+public class CurrentBalance implements IResult<Double> {
 	public static final String NEGATIVE_BALANCE = "negative_balance";
 	public static final String SUCCESS = "success";
 	private double value;
@@ -17,7 +17,7 @@ public class CurrentBalance implements IResult<double> {
 	}
 
 	@Override
-	public double getValue() {
+	public Double getValue() {
 		return value;
 	}
 }
