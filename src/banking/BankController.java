@@ -58,7 +58,8 @@ public class BankController extends Controller {
 		System.out.println("Empty Reports :\n" + view.repFile.toString());
 		deposit = new Proxy(deposit, view.repFile);
 		IResult result = commandManager.submit(deposit);
-		System.out.println("One Report Added :\n" + view.repFile.toString());
+		System.out.println("Deposite Report Added :\n" + view.repFile.toString());
+		view.accFile.updateAccount(account);
 		runNotifyRule(entry, account, result);
 	}
 
@@ -67,6 +68,8 @@ public class BankController extends Controller {
 		LoggableAction withdraw = new Withdraw(entry, account);
 		withdraw = new Proxy(withdraw, view.repFile);
 		IResult result = commandManager.submit(withdraw);
+		System.out.println("Withdraw Report Added :\n" + view.repFile.toString());
+		view.accFile.updateAccount(account);
 		runNotifyRule(entry, account, result);
 	}
 

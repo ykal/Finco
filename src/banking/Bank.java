@@ -3,6 +3,7 @@ package banking;
 import banking.models.BankingAccountFactory;
 import banking.models.CheckingAccount;
 import banking.models.CheckingAccountFactory;
+import banking.persistance.BankAccFile;
 import framework.FinCo;
 import framework.controllers.CommandManager;
 import framework.models.Data;
@@ -39,16 +40,16 @@ public class Bank implements Observer {
 		commandManager = new CommandManager();
 		bankController = new BankController(commandManager, this);
 		repFile = new REPFile();
-		accFile = new ACCFile();
+		accFile = new BankAccFile(this);
 		cusFile = new CUSFile();
 		model = new Data();
-		populateModelColumns();
+		populateModelColumns(model);
 		app = new FinCo("Banking Application", model);
 		addOperationButtons(app, model);
 		accFile.attach(this);
 	}
 
-	private void populateModelColumns() {
+	public void populateModelColumns(Data model) {
 		model.addColumn("AccountNr");
 		model.addColumn("Email");
 		model.addColumn("Name");
