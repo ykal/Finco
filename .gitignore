@@ -33,6 +33,12 @@ hs_err_pid*
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+# Amanuel's additions
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+Finco.iml
 # Generated files
 .idea/**/contentModel.xml
 # Sensitive or high-churn files
