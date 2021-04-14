@@ -3,27 +3,49 @@ package framework.models.account;
 import framework.models.account.Account;
 import framework.models.account.Entry;
 
-public class Report {
-	private Float prevBalance;
-	private Account account;
-	private Entry entry;
+import java.time.LocalDate;
 
-	public Float getPrevBalance() {
-		return prevBalance;
+public class Report {
+	private double amount;
+	private String accId;
+	private LocalDate date;
+
+	public Report(double amount, String accId, LocalDate date) {
+		this.amount = amount;
+		this.accId = accId;
+		this.date = date;
 	}
-	public void setPrevBalance(Float prevBalance) {
-		this.prevBalance = prevBalance;
+
+	public double getAmount() {
+		return amount;
 	}
-	public Account getAccount() {
-		return account;
+
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
-	public void setAccount(Account account) {
-		this.account = account;
+
+	public String getAccId() {
+		return accId;
 	}
-	public Entry getEntry() {
-		return entry;
+
+	public void setAccId(String accId) {
+		this.accId = accId;
 	}
-	public void setEntry(Entry entry) {
-		this.entry = entry;
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	@Override
+	public String toString() {
+		return "Report{" +
+				"amount=" + amount +
+				", accId='" + accId + '\'' +
+				", date=" + date +
+				'}';
 	}
 }
