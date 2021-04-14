@@ -5,9 +5,7 @@ import framework.controllers.results.IResult;
 import framework.models.account.Account;
 import framework.models.account.Entry;
 
-import javax.swing.plaf.ColorUIResource;
-
-public class Withdraw extends LoggedAction {
+public class Withdraw extends LoggableAction {
 	private Entry entry;
 	private Account account;
 	public Withdraw(Entry entry, Account account) {

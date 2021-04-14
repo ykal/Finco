@@ -5,7 +5,7 @@ import framework.controllers.results.IResult;
 import framework.models.account.Account;
 import framework.models.account.Entry;
 
-public class Deposit extends LoggedAction{
+public class Deposit extends LoggableAction {
 	private Entry entry;
 	private Account account;
 

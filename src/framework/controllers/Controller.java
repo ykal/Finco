@@ -17,20 +17,24 @@ public abstract class Controller implements ActionListener {
 //		TODO map this to deposit, addinterest, addaccount ... methods.
 	}
 
-	protected void report(){}
+	protected void report(){
+//		TODO
+	}
 
 	protected void deposit(Entry entry, Account account) {
-		LoggedAction deposit = new Deposit(entry, account);
+		LoggableAction deposit = new Deposit(entry, account);
 		deposit = new Proxy(deposit);
 		IResult result = deposit.execute();
 	}
 
 	protected void withdraw(Entry entry, Account account){
-		LoggedAction withdraw = new Withdraw(entry, account);
+		LoggableAction withdraw = new Withdraw(entry, account);
 		withdraw = new Proxy(withdraw);
 		IResult result = withdraw.execute();
 	}
 
-	protected void addInterest(){}
+	protected void addInterest(){
+//		TODO
+	}
 
 }

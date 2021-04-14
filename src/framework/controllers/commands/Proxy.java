@@ -4,9 +4,9 @@ import framework.controllers.results.IResult;
 import framework.models.account.Account;
 import framework.models.account.Entry;
 
-public class Proxy extends LoggedAction {
-	private LoggedAction laction;
-	public Proxy(LoggedAction laction) {
+public class Proxy extends LoggableAction {
+	private LoggableAction laction;
+	public Proxy(LoggableAction laction) {
 		super();
 		this.laction = laction;
 	}
