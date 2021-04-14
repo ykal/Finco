@@ -43,6 +43,7 @@ public class BankController extends Controller {
 		LoggableAction deposit = new Deposit(entry, account);
 		deposit = new Proxy(deposit);
 		IResult result = commandManager.submit(deposit);
+		System.out.println("One Report Added :\n" + view.repFile.toString());
 		runNotifyRule(entry, account, result);
 	}
 

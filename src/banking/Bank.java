@@ -21,9 +21,15 @@ public class Bank {
 
 	public Bank() {
 		bankController = new BankController(commandManager, this);
+		Account account = new CheckingAccount("some shit");
+		Customer customer = new Person();
+		account.setOwner(customer);
+		accFile.addAccount(account);
+		cusFile = new CUSFile();
 		model = new Data();
 		model.addColumn("First");
 		model.addColumn("Second");
+		model.addRow(new Object[]{"some shit", "another shit"});
 		app = new FinCo("Banking Application", model);
 		addOperationButtons(app, model);
 	}
