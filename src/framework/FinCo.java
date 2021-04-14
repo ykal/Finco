@@ -13,7 +13,6 @@ import java.awt.event.WindowEvent;
 
 public class FinCo extends JFrame{
 	private Controller controller;
-	private CommandManager commandManager;
 
 	private Data model;
 	private JTable JTable1;
@@ -92,11 +91,6 @@ public class FinCo extends JFrame{
 			System.exit(0); // close the application
 		} catch (Exception e) {
 		}
-	}
-
-	public FinCo(Controller controller, CommandManager cm) {
-		this.controller = controller;
-		this.commandManager = cm;
 	}
 
 	public void start() {
