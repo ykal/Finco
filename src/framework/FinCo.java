@@ -63,6 +63,35 @@ public class FinCo extends JFrame{
 		this.addWindowListener(aSymWindow);
 	}
 
+	class SymWindow extends java.awt.event.WindowAdapter {
+		public void windowClosing(WindowEvent event) {
+			Object object = event.getSource();
+			if (object == this)
+				BankFrm_windowClosing(event);
+		}
+	}
+
+	void BankFrm_windowClosing(WindowEvent event) {
+		// to do: code goes here.
+
+		BankFrm_windowClosing_Interaction1(event);
+	}
+
+	void BankFrm_windowClosing_Interaction1(WindowEvent event) {
+		try {
+			this.exitApplication();
+		} catch (Exception e) {
+		}
+	}
+
+	void exitApplication() {
+		try {
+			this.setVisible(false); // hide the Frame
+			this.dispose(); // free the system resources
+			System.exit(0); // close the application
+		} catch (Exception e) {
+		}
+	}
 
 	public FinCo(Controller controller, CommandManager cm) {
 		this.controller = controller;
@@ -90,36 +119,9 @@ public class FinCo extends JFrame{
 		}
 	}
 
-	void exitApplication() {
-		try {
-			this.setVisible(false); // hide the Frame
-			this.dispose(); // free the system resources
-			System.exit(0); // close the application
-		} catch (Exception e) {
-		}
+	public void addComponent(Component component) {
+		this.JPanel1.add(component);
 	}
-
-	class SymWindow extends java.awt.event.WindowAdapter {
-		public void windowClosing(WindowEvent event) {
-			Object object = event.getSource();
-			if (object == this)
-				BankFrm_windowClosing(event);
-		}
-	}
-
-	void BankFrm_windowClosing(WindowEvent event) {
-		// to do: code goes here.
-
-		BankFrm_windowClosing_Interaction1(event);
-	}
-
-	void BankFrm_windowClosing_Interaction1(WindowEvent event) {
-		try {
-			this.exitApplication();
-		} catch (Exception e) {
-		}
-	}
-
 
 	public static void main(String[] args) {
 		FinCo app = new FinCo("Finco", new DefaultTableModel());
