@@ -1,11 +1,10 @@
 package banking;
 
 import framework.FinCo;
+import framework.controllers.CommandManager;
 import framework.models.Data;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Bank {
 
@@ -17,8 +16,11 @@ public class Bank {
 	JButton JButton_Addinterest= new JButton();
 	Data model;
 	FinCo app;
+	BankController bankController;
+	CommandManager commandManager;
 
 	public Bank() {
+		bankController = new BankController(commandManager, this);
 		model = new Data();
 		model.addColumn("First");
 		model.addColumn("Second");

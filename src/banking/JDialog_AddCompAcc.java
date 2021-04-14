@@ -1,7 +1,5 @@
 package banking;
 
-import framework.FinCo;
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -148,7 +146,6 @@ public class JDialog_AddCompAcc extends JDialog
            parentframe.accountType="Ch";
            else
            parentframe.accountType="S";
-	   parentframe.newaccount=true;
 	   dispose();
 			 
 	}
