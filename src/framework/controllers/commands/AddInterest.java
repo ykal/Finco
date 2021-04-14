@@ -29,7 +29,7 @@ public class AddInterest extends AbstractAction {
 
 		accounts.doAll(addInterests);
 
-		IResult result = new CurrentBalance("Interests Added to Accounts!", null);
+		IResult result = new CurrentBalance(0, CurrentBalance.SUCCESS);
 		return result;
 	}
 
