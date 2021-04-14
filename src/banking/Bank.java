@@ -1,36 +1,29 @@
 package banking;
 
 import framework.FinCo;
-import framework.controllers.Controller;
 import framework.models.Data;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 public class Bank {
 
 	String accountnr, clientName,street,city,zip,state,accountType,clientType,amountDeposit;
-	boolean newaccount;
-	JPanel JPanel1 = new JPanel();
 	JButton JButton_PerAC = new JButton();
 	JButton JButton_CompAC = new JButton();
 	JButton JButton_Deposit = new JButton();
 	JButton JButton_Withdraw = new JButton();
 	JButton JButton_Addinterest= new JButton();
-	JButton JButton_Exit = new JButton();
 	Data model;
 	FinCo app;
 
 	public Bank() {
-		 model = new Data();
+		model = new Data();
 		model.addColumn("First");
 		model.addColumn("Second");
 		app = new FinCo("Banking Application", model);
 		addOperationButtons(app, model);
-
 	}
 
 	static public void main(String args[]){
@@ -39,20 +32,15 @@ public class Bank {
 
 	private void addOperationButtons(FinCo app, Data model) {
 		JButton_PerAC.setText("Add personal account");
-		JPanel1.add(JButton_PerAC);
 		JButton_PerAC.setBounds(24,20,192,33);
 		JButton_CompAC.setText("Add company account");
 		JButton_CompAC.setActionCommand("jbutton");
-		JPanel1.add(JButton_CompAC);
 		JButton_CompAC.setBounds(240,20,190,33);
 		JButton_Deposit.setText("Deposit");
-		JPanel1.add(JButton_Deposit);
 		JButton_Deposit.setBounds(468,104,96,33);
 		JButton_Withdraw.setText("Withdraw");
-		JPanel1.add(JButton_Withdraw);
 		JButton_Addinterest.setBounds(448,20,106,33);
 		JButton_Addinterest.setText("Add interest");
-		JPanel1.add(JButton_Addinterest);
 		JButton_Withdraw.setBounds(468,164,96,33);
 		app.addComponent(JButton_PerAC);
 		app.addComponent(JButton_CompAC);
@@ -126,7 +114,7 @@ public class Bank {
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 
-		// Todo :: call controller.addAccount
+		// Todo :: call controller.addCompanyAccount
 
 	}
 
