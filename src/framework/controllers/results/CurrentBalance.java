@@ -1,13 +1,21 @@
 package framework.controllers.results;
 
-public class CurrentBalance implements IResult<Float> {
-	@Override
-	public String getMessage() {
-		return null;
+public class CurrentBalance implements IResult<Double> {
+	private String message;
+	private Double value;
+
+	public CurrentBalance(String message, Double value) {
+		this.message = message;
+		this.value = value;
 	}
 
 	@Override
-	public Float getValue() {
-		return null;
+	public String getMessage() {
+		return message;
+	}
+
+	@Override
+	public Double getValue() {
+		return value;
 	}
 }
