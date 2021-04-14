@@ -6,6 +6,16 @@ public class Person extends Customer implements IPerson {
 	private LocalDate birthDate;
 	private Company company;
 
+	// Default constructor
+	public Person() {
+		super();
+	}
+
+	public Person(String name, String street, String city, String state, String zip, String email, LocalDate birthDate) {
+		super(name, street, city, state, zip, email);
+		this.birthDate = birthDate;
+	}
+
 	public LocalDate getBirthDate() {
 		return birthDate;
 	}
