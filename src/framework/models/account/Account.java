@@ -8,7 +8,7 @@ import framework.models.customer.*;
 public abstract class Account {
 	private String id;
 	private double currentBalance;
-	private ICustomer owner;
+	private Customer owner;
 	private List<IEntry> entries;
 
 	public Account() {
@@ -35,10 +35,10 @@ public abstract class Account {
 	public void setCurrentBalance(double balance) {
 		this.currentBalance = balance;
 	}
-	public ICustomer getOwner() {
+	public Customer getOwner() {
 		return owner;
 	}
-	public void setOwner(ICustomer owner) {
+	public void setOwner(Customer owner) {
 		this.owner = owner;
 	}
 	public List<IEntry> getEntries() {

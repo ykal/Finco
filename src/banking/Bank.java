@@ -1,21 +1,24 @@
 package banking;
 
+import banking.models.BankingAccountFactory;
 import banking.models.CheckingAccount;
+import banking.models.CheckingAccountFactory;
 import framework.FinCo;
 import framework.controllers.CommandManager;
 import framework.models.Data;
 import framework.models.account.Account;
 import framework.models.customer.Customer;
 import framework.models.customer.Person;
+import framework.observer.Observer;
 import framework.persistence.ACCFile;
 import framework.persistence.CUSFile;
 import framework.persistence.REPFile;
 
 import javax.swing.*;
 
-public class Bank {
+public class Bank implements Observer {
 
-	String accountnr, clientName,street,city,zip,state,accountType,clientType;
+	String accountnr, clientName,street,city,zip,state,accountType,email;
 	double amountDeposit;
 	JButton JButton_PerAC = new JButton();
 	JButton JButton_CompAC = new JButton();
@@ -35,17 +38,20 @@ public class Bank {
 		bankController = new BankController(commandManager, this);
 		repFile = new REPFile();
 		accFile = new ACCFile();
-		Account account = new CheckingAccount("some shit");
+		BankingAccountFactory accountFactory = new CheckingAccountFactory();
+		Account account = accountFactory.createAccount("some shit");
 		Customer customer = new Person();
+		customer.setEmail("someemail");
 		account.setOwner(customer);
 		accFile.addAccount(account);
 		cusFile = new CUSFile();
 		model = new Data();
-		model.addColumn("First");
-		model.addColumn("Second");
-		model.addRow(new Object[]{"some shit", "another shit"});
+		model.addColumn("Account");
+		model.addColumn("Email");
+//		model.addRow(new Object[]{"some shit", "another shit"});
 		app = new FinCo("Banking Application", model);
 		addOperationButtons(app, model);
+		accFile.attach(this);
 	}
 
 	static public void main(String args[]){
@@ -79,5 +85,12 @@ public class Bank {
 		JButton_Deposit.addActionListener(bankController);
 		JButton_Withdraw.addActionListener(bankController);
 		JButton_Addinterest.addActionListener(bankController);
+	}
+
+	@Override
+	public void update(Data data) {
+		System.out.println("update is called \n" + data.toString());
+		this.model = data;
+		this.app.setTableModel(data);
 	}
 }

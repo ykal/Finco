@@ -121,6 +121,8 @@ public class FinCo extends JFrame{
 		return this.JTable1.getSelectionModel().getMinSelectionIndex();
 	}
 
+	public void setTableModel(Data data){this.JTable1.setModel(data);}
+
 	public static void main(String[] args) {
 		FinCo app = new FinCo("Finco", new DefaultTableModel());
 		app.start();

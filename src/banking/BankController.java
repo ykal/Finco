@@ -1,6 +1,9 @@
 package banking;
 
 import banking.models.BankingAccount;
+import banking.models.BankingAccountFactory;
+import banking.models.CheckingAccount;
+import banking.models.CheckingAccountFactory;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
 import framework.controllers.commands.*;
@@ -12,6 +15,11 @@ import framework.controllers.ruleengine.Rule;
 import framework.models.account.Account;
 import framework.models.account.Entry;
 import framework.models.account.IEntry;
+import framework.models.customer.CompanyFactory;
+import framework.models.customer.Customer;
+import framework.models.customer.ICustomer;
+import framework.models.customer.PersonFactory;
+import framework.persistence.CUSFile;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -61,7 +69,18 @@ public class BankController extends Controller {
 	}
 
 	@Override
-	protected void addAccount() {
+	protected void addAccount(String ctype) {
+		BankingAccountFactory bankingAccountFactory = new CheckingAccountFactory();
+		Account account = bankingAccountFactory.createAccount(view.accountnr);
+		Customer customer = view.cusFile.get((Customer c) -> c.getEmail().equals(view.email));
+		if (customer == null) {
+			customer = ctype.equals(Customer.PERSON) ?
+					PersonFactory.createCustomer() :
+					CompanyFactory.createCustomer();
+		}
+		customer.setEmail(view.email);
+		account.setOwner(customer);
+		view.accFile.addAccount(account);
 	}
 
 	@Override
@@ -90,7 +109,7 @@ public class BankController extends Controller {
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 
-		// Todo:: call controller.addAccount
+		addAccount(Customer.PERSON);
 	}
 
 	void JButtonCompAC_actionPerformed(ActionEvent event)
@@ -105,8 +124,7 @@ public class BankController extends Controller {
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 
-		// Todo :: call controller.addCompanyAccount
-
+		addAccount(Customer.COMPANY);
 	}
 
 	void JButtonDeposit_actionPerformed(ActionEvent event)
