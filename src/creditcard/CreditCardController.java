@@ -1,9 +1,15 @@
 package creditcard;
 
+import banking.models.BankingAccountFactory;
+import creditcard.models.CreditCardAccountFactory;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
 import framework.models.account.Account;
+import framework.models.account.IAccount;
 import framework.models.account.IEntry;
+import framework.models.customer.Customer;
+import framework.models.customer.CustomerFactory;
+import framework.models.customer.ICustomer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +41,19 @@ public class CreditCardController extends Controller {
 
     @Override
     protected void addAccount(String ctype) {
-        // Todo
+        Account account = CreditCardAccountFactory.createAccount(this.creditCard.accountType, this.creditCard.ccnumber);
+        Customer customer = this.creditCard.getCusFile().get((Customer c) -> c.getEmail().equals(this.creditCard.email));
+        if (customer == null) {
+            customer = CustomerFactory.createCustomer(ctype);
+        }
+        // TODO :: refactor them with constructor to take all properties
+        customer.setEmail(this.creditCard.email);
+        customer.setCity(this.creditCard.city);
+        customer.setName(this.creditCard.clientName);
+        customer.addAccount((IAccount) account);
+        account.setOwner(customer);
+        // Todo: add expire date to account
+        this.creditCard.getAccFile().addAccount(account);
     }
 
     public void actionPerformed(ActionEvent event) {
@@ -60,6 +78,8 @@ public class CreditCardController extends Controller {
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
         // Todo :: add account logic
+        addAccount(ICustomer.PERSON);
+
     }
 
     void JButtonGenerateBill_actionPerformed(ActionEvent event) {

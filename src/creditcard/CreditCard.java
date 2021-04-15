@@ -1,6 +1,7 @@
 package creditcard;
 
 import banking.persistance.BankAccFile;
+import creditcard.persistance.CreditCardAccFile;
 import framework.FinCo;
 import framework.View;
 import framework.controllers.CommandManager;
@@ -11,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class CreditCard extends FinCo {
 
-    String clientName, street, city, zip, state, accountType, amountDeposit, expdate, ccnumber;
+    String clientName, street, city, zip, state, accountType, amountDeposit, expdate, ccnumber, email;
 
     JButton JButton_NewCCAccount = new JButton();
     JButton JButton_GenBill = new JButton();
@@ -21,7 +22,7 @@ public class CreditCard extends FinCo {
     public CreditCard(String title, Data model) {
         super(title, model);
         this.setController(new CreditCardController(this));
-        this.setAccFile(new BankAccFile(this));
+        this.setAccFile(new CreditCardAccFile(this));
         this.setCommandManager(new CommandManager());
         this.setModel(new Data());
         populateModelColumns(this.getModel());
