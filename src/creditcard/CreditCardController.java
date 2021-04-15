@@ -1,10 +1,21 @@
 package creditcard;
 
+import banking.NotifyAssessor;
+import banking.NotifyProperty;
 import banking.models.BankingAccountFactory;
 import creditcard.models.CreditCardAccountFactory;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
+import framework.controllers.commands.ENotify;
+import framework.controllers.commands.LoggableAction;
+import framework.controllers.commands.Proxy;
+import framework.controllers.commands.Withdraw;
+import framework.controllers.results.IResult;
+import framework.controllers.ruleengine.AbstractAssessor;
+import framework.controllers.ruleengine.IProperty;
+import framework.controllers.ruleengine.Rule;
 import framework.models.account.Account;
+import framework.models.account.Entry;
 import framework.models.account.IAccount;
 import framework.models.account.IEntry;
 import framework.models.customer.Customer;
@@ -13,6 +24,7 @@ import framework.models.customer.ICustomer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDate;
 
 public class CreditCardController extends Controller {
 
@@ -31,7 +43,11 @@ public class CreditCardController extends Controller {
 
     @Override
     protected void withdraw(IEntry entry, Account account) {
-        // Todo
+        LoggableAction withdraw = new Withdraw(entry, account);
+        withdraw = new Proxy(withdraw, this.creditCard.getRepFile());
+        IResult result = commandManager.submit(withdraw);
+        System.out.println("Withdraw Report Added :\n" + this.creditCard.getRepFile().toString());
+        this.creditCard.getAccFile().updateAccount(account);
     }
 
     @Override
@@ -109,6 +125,7 @@ public class CreditCardController extends Controller {
         // get selected name
         int selection = this.creditCard.getView().getTableSelection();
         if (selection >= 0) {
+            String cc_number = (String) this.creditCard.getModel().getValueAt(selection, 1);
             String name = (String) this.creditCard.getModel().getValueAt(selection, 0);
 
             // Show the dialog for adding withdraw amount for the current mane
@@ -117,7 +134,9 @@ public class CreditCardController extends Controller {
             wd.show();
 
             //  Todo :: Withdraw logic and compute new amount
-//
+            IEntry entry = new Entry(this.creditCard.amountDeposit, LocalDate.now());
+            Account account = this.creditCard.getAccFile().get((Account a) -> a.getId().equals(cc_number));
+            withdraw(entry, account);
         }
 
     }
