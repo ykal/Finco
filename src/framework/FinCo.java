@@ -59,7 +59,7 @@ public class FinCo implements Observer {
 		this.view = view;
 	}
 
-	public void setBankController(Controller controller) {
+	public void setController(Controller controller) {
 		this.controller = controller;
 	}
 
