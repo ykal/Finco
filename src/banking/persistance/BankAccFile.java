@@ -6,6 +6,8 @@ import framework.models.account.Account;
 import framework.observer.Observer;
 import framework.persistence.ACCFile;
 
+import java.util.List;
+
 public class BankAccFile extends ACCFile {
 	FinCo app;
 
@@ -28,6 +30,7 @@ public class BankAccFile extends ACCFile {
 						account.getCurrentBalance()}));
 		observers.forEach((Observer o) -> o.update(data));
 	}
+
 
 	@Override
 	public void updateAccount(Account account) {
