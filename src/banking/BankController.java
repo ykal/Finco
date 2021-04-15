@@ -13,11 +13,8 @@ import framework.models.account.Account;
 import framework.models.account.Entry;
 import framework.models.account.IAccount;
 import framework.models.account.IEntry;
-import framework.models.customer.CompanyFactory;
 import framework.models.customer.Customer;
-import framework.models.customer.ICustomer;
-import framework.models.customer.PersonFactory;
-import framework.persistence.CUSFile;
+import framework.models.customer.CustomerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -79,9 +76,7 @@ public class BankController extends Controller {
 		Account account = bankingAccountFactory.createAccount(view.accountnr);
 		Customer customer = view.cusFile.get((Customer c) -> c.getEmail().equals(view.email));
 		if (customer == null) {
-			customer = ctype.equals(Customer.PERSON) ?
-					PersonFactory.createCustomer() :
-					CompanyFactory.createCustomer();
+			customer = CustomerFactory.createCustomer(ctype);
 		}
 		// TODO :: refactor them with constructor to take all properties
 		customer.setEmail(view.email);
