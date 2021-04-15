@@ -1,15 +1,9 @@
 package banking;
 
-import banking.models.BankingAccountFactory;
-import banking.models.CheckingAccount;
-import banking.models.CheckingAccountFactory;
 import banking.persistance.BankAccFile;
 import framework.FinCo;
 import framework.controllers.CommandManager;
 import framework.models.Data;
-import framework.models.account.Account;
-import framework.models.customer.Customer;
-import framework.models.customer.Person;
 import framework.observer.Observer;
 import framework.persistence.ACCFile;
 import framework.persistence.CUSFile;
@@ -17,7 +11,6 @@ import framework.persistence.REPFile;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.Vector;
 
 public class Bank implements Observer {
 
