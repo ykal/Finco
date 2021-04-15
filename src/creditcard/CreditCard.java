@@ -12,8 +12,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class CreditCard extends FinCo {
 
-    String clientName, street, city, zip, state, accountType, amountDeposit, expdate, ccnumber, email;
-
+    String clientName, street, city, zip, state, accountType, expdate, ccnumber, email;
+    double amountDeposit;
     JButton JButton_NewCCAccount = new JButton();
     JButton JButton_GenBill = new JButton();
     JButton JButton_Deposit = new JButton();
