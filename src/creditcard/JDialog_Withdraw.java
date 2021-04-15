@@ -8,12 +8,12 @@ import javax.swing.*;
 public class JDialog_Withdraw extends JDialog
 {
    
-    private CardFrm parentframe;
+    private CreditCard parentframe;
     private String name;
 
-	public JDialog_Withdraw(CardFrm parent, String aname)
+	public JDialog_Withdraw(CreditCard parent, String aname)
 	{
-		super(parent);
+		super(parent.getView());
 		parentframe=parent;
 		name=aname;
 		

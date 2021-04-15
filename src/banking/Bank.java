@@ -28,7 +28,7 @@ public class Bank extends FinCo {
 		super(title, model);
 		this.setAccFile(new BankAccFile(this));
 		this.setCommandManager(new CommandManager());
-		this.setBankController(new BankController(this));
+		this.setController(new BankController(this));
 		this.setModel(new Data());
 		populateModelColumns(this.getModel());
 		addOperationButtons(this.getView(), model);
