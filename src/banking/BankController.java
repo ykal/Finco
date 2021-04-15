@@ -29,10 +29,6 @@ public class BankController extends Controller {
 		this.view = view;
 	}
 
-	public static BankingAccountFactory getFactory(String accountType) {
-		return accountType.equals(BankingAccount.TYPE_CHECKING) ? new CheckingAccountFactory() : new SavingAccountFactory();
-	}
-
 	public void actionPerformed(ActionEvent event)
 	{
 		Object object = event.getSource();
@@ -72,8 +68,7 @@ public class BankController extends Controller {
 
 	@Override
 	protected void addAccount(String ctype) {
-		BankingAccountFactory bankingAccountFactory = getFactory(view.accountType);
-		Account account = bankingAccountFactory.createAccount(view.accountnr);
+		Account account = BankingAccountFactory.createAccount(view.accountType, view.accountnr);
 		Customer customer = view.cusFile.get((Customer c) -> c.getEmail().equals(view.email));
 		if (customer == null) {
 			customer = CustomerFactory.createCustomer(ctype);
