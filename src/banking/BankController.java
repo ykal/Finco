@@ -22,25 +22,25 @@ import java.time.LocalDate;
 
 public class BankController extends Controller {
 	private CommandManager commandManager;
-	private Bank view;
+	private Bank bank;
 
-	public BankController(CommandManager commandManager, Bank view) {
-		this.commandManager = commandManager;
-		this.view = view;
+	public BankController(Bank bank) {
+		this.commandManager = bank.getCommandManager();
+		this.bank = bank;
 	}
 
 	public void actionPerformed(ActionEvent event)
 	{
 		Object object = event.getSource();
-		if (object == view.JButton_PerAC)
+		if (object == this.bank.JButton_PerAC)
 			JButtonPerAC_actionPerformed(event);
-		else if (object == view.JButton_CompAC)
+		else if (object ==  this.bank.JButton_CompAC)
 			JButtonCompAC_actionPerformed(event);
-		else if (object == view.JButton_Deposit)
+		else if (object ==  this.bank.JButton_Deposit)
 			JButtonDeposit_actionPerformed(event);
-		else if (object == view.JButton_Withdraw)
+		else if (object ==  this.bank.JButton_Withdraw)
 			JButtonWithdraw_actionPerformed(event);
-		else if (object == view.JButton_Addinterest)
+		else if (object ==  this.bank.JButton_Addinterest)
 			JButtonAddinterest_actionPerformed(event);
 
 	}
@@ -48,43 +48,43 @@ public class BankController extends Controller {
 	@Override
 	protected void deposit(IEntry entry, Account account){
 		LoggableAction deposit = new Deposit(entry, account);
-		System.out.println("Empty Reports :\n" + view.repFile.toString());
-		deposit = new Proxy(deposit, view.repFile);
+		System.out.println("Empty Reports :\n" + this.bank.getRepFile().toString());
+		deposit = new Proxy(deposit, this.bank.getRepFile());
 		IResult result = commandManager.submit(deposit);
-		System.out.println("Deposite Report Added :\n" + view.repFile.toString());
-		view.accFile.updateAccount(account);
+		System.out.println("Deposite Report Added :\n" + this.bank.getRepFile().toString());
+		this.bank.getAccFile().updateAccount(account);
 		runNotifyRule(entry, account, result);
 	}
 
 	@Override
 	protected void withdraw(IEntry entry, Account account){
 		LoggableAction withdraw = new Withdraw(entry, account);
-		withdraw = new Proxy(withdraw, view.repFile);
+		withdraw = new Proxy(withdraw, this.bank.getRepFile());
 		IResult result = commandManager.submit(withdraw);
-		System.out.println("Withdraw Report Added :\n" + view.repFile.toString());
-		view.accFile.updateAccount(account);
+		System.out.println("Withdraw Report Added :\n" + this.bank.getRepFile().toString());
+		this.bank.getAccFile().updateAccount(account);
 		runNotifyRule(entry, account, result);
 	}
 
 	@Override
 	protected void addAccount(String ctype) {
-		Account account = BankingAccountFactory.createAccount(view.accountType, view.accountnr);
-		Customer customer = view.cusFile.get((Customer c) -> c.getEmail().equals(view.email));
+		Account account = BankingAccountFactory.createAccount(this.bank.accountType, this.bank.accountnr);
+		Customer customer = this.bank.getCusFile().get((Customer c) -> c.getEmail().equals(this.bank.email));
 		if (customer == null) {
 			customer = CustomerFactory.createCustomer(ctype);
 		}
 		// TODO :: refactor them with constructor to take all properties
-		customer.setEmail(view.email);
-		customer.setCity(view.city);
-		customer.setName(view.clientName);
+		customer.setEmail(this.bank.email);
+		customer.setCity(this.bank.city);
+		customer.setName(this.bank.clientName);
 		customer.addAccount((IAccount) account);
 		account.setOwner(customer);
-		view.accFile.addAccount(account);
+		this.bank.getAccFile().addAccount(account);
 	}
 
 	@Override
 	protected void addInterest() {
-		AbstractAction action = new AddInterest(view.accFile);
+		AbstractAction action = new AddInterest(this.bank.getAccFile());
 		IResult result = commandManager.submit(action);
 	}
 
@@ -104,7 +104,7 @@ public class BankController extends Controller {
 		 set the boundaries and show it
 		*/
 
-		JDialog_AddPAcc pac = new JDialog_AddPAcc(view);
+		JDialog_AddPAcc pac = new JDialog_AddPAcc(this.bank);
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 
@@ -119,7 +119,7 @@ public class BankController extends Controller {
 		 show it
 		*/
 
-		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(view);
+		JDialog_AddCompAcc pac = new JDialog_AddCompAcc(this.bank);
 		pac.setBounds(450, 20, 300, 330);
 		pac.show();
 
@@ -129,17 +129,17 @@ public class BankController extends Controller {
 	void JButtonDeposit_actionPerformed(ActionEvent event)
 	{
 		// get selected name
-		int selection = this.view.app.getTableSelection();
+		int selection = this.bank.getView().getTableSelection();
 		if (selection >= 0){
-			String accnr = (String)this.view.model.getValueAt(selection, 0);
+			String accnr = (String)this.bank.getModel().getValueAt(selection, 0);
 
 			//Show the dialog for adding deposit amount for the current mane
-			JDialog_Deposit dep = new JDialog_Deposit(view,accnr);
+			JDialog_Deposit dep = new JDialog_Deposit(this.bank,accnr);
 			dep.setBounds(430, 15, 275, 140);
 			dep.show();
 
-			IEntry entry = new Entry(view.amountDeposit, LocalDate.now());
-			Account account = view.accFile.get((Account a) -> a.getId().equals(accnr));
+			IEntry entry = new Entry(this.bank.amountDeposit, LocalDate.now());
+			Account account = this.bank.getAccFile().get((Account a) -> a.getId().equals(accnr));
 			deposit(entry, account);
 		}
 
@@ -149,17 +149,17 @@ public class BankController extends Controller {
 	void JButtonWithdraw_actionPerformed(ActionEvent event)
 	{
 		// get selected name
-		int selection = this.view.app.getTableSelection();
+		int selection = this.bank.getView().getTableSelection();
 		if (selection >=0) {
-			String accnr = (String)this.view.model.getValueAt(selection, 0);
+			String accnr = (String)this.bank.getModel().getValueAt(selection, 0);
 
 			//Show the dialog for adding withdraw amount for the current mane
-			JDialog_Withdraw wd = new JDialog_Withdraw(this.view,accnr);
+			JDialog_Withdraw wd = new JDialog_Withdraw(this.bank,accnr);
 			wd.setBounds(430, 15, 275, 140);
 			wd.show();
 
-			IEntry entry = new Entry(view.amountDeposit, LocalDate.now());
-			Account account = view.accFile.get((Account a) -> a.getId().equals(accnr));
+			IEntry entry = new Entry(this.bank.amountDeposit, LocalDate.now());
+			Account account = this.bank.getAccFile().get((Account a) -> a.getId().equals(accnr));
 			withdraw(entry, account);
 		}
 
@@ -168,7 +168,7 @@ public class BankController extends Controller {
 
 	void JButtonAddinterest_actionPerformed(ActionEvent event)
 	{
-		JOptionPane.showMessageDialog(this.view.JButton_Addinterest,
+		JOptionPane.showMessageDialog(this.bank.JButton_Addinterest,
 				"Add interest to all accounts",
 				"Add interest to all accounts",
 				JOptionPane.WARNING_MESSAGE);

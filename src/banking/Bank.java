@@ -2,6 +2,7 @@ package banking;
 
 import banking.persistance.BankAccFile;
 import framework.FinCo;
+import framework.View;
 import framework.controllers.CommandManager;
 import framework.models.Data;
 import framework.observer.Observer;
@@ -12,7 +13,7 @@ import framework.persistence.REPFile;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class Bank implements Observer {
+public class Bank extends FinCo {
 
 	String accountnr, clientName,street,city,zip,state,accountType,email;
 	double amountDeposit;
@@ -21,25 +22,16 @@ public class Bank implements Observer {
 	JButton JButton_Deposit = new JButton();
 	JButton JButton_Withdraw = new JButton();
 	JButton JButton_Addinterest= new JButton();
-	Data model;
-	FinCo app;
-	BankController bankController;
-	CommandManager commandManager;
-	REPFile repFile;
-	ACCFile accFile;
-	CUSFile cusFile;
 
-	public Bank() {
-		commandManager = new CommandManager();
-		bankController = new BankController(commandManager, this);
-		repFile = new REPFile();
-		accFile = new BankAccFile(this);
-		cusFile = new CUSFile();
-		model = new Data();
-		populateModelColumns(model);
-		app = new FinCo("Banking Application", model);
-		addOperationButtons(app, model);
-		accFile.attach(this);
+
+	public Bank(String title, Data model) {
+		super(title, model);
+		this.setAccFile(new BankAccFile(this));
+		this.setCommandManager(new CommandManager());
+		this.setBankController(new BankController(this));
+		this.setModel(new Data());
+		populateModelColumns(this.getModel());
+		addOperationButtons(this.getView(), model);
 	}
 
 	public void populateModelColumns(Data model) {
@@ -53,10 +45,10 @@ public class Bank implements Observer {
 	}
 
 	static public void main(String args[]){
-		(new Bank()).app.start();
+		(new Bank("Bank Application", new Data())).getView().start();
 	}
 
-	private void addOperationButtons(FinCo app, DefaultTableModel model) {
+	private void addOperationButtons(View app, DefaultTableModel model) {
 		// create operation buttons
 		JButton_PerAC.setText("Add personal account");
 		JButton_PerAC.setBounds(24,20,192,33);
@@ -78,17 +70,17 @@ public class Bank implements Observer {
 		app.addComponent(JButton_Addinterest);
 
 		// add action listener
-		JButton_PerAC.addActionListener(bankController);
-		JButton_CompAC.addActionListener(bankController);
-		JButton_Deposit.addActionListener(bankController);
-		JButton_Withdraw.addActionListener(bankController);
-		JButton_Addinterest.addActionListener(bankController);
+		JButton_PerAC.addActionListener(getController());
+		JButton_CompAC.addActionListener(getController());
+		JButton_Deposit.addActionListener(getController());
+		JButton_Withdraw.addActionListener(getController());
+		JButton_Addinterest.addActionListener(getController());
 	}
 
 	@Override
 	public void update(Data data) {
 		System.out.println("update is called \n" + data.toString());
-		this.model = data;
-		this.app.setTableModel(data);
+		this.setModel(data);
+		this.getView().setTableModel(data);
 	}
 }
