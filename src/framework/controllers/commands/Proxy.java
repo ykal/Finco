@@ -34,8 +34,10 @@ public class Proxy extends LoggableAction {
 
 	private void addToHistory(IResult result) {
 		Report report = new Report(laction.getEntry().getAmount(),
+				laction.getAccount().getCurrentBalance(),
 				laction.getAccount().getId(),
-				laction.getEntry().getDate());
+				laction.getEntry().getDate(),
+				laction.getEntry().getEntryType());
 		repFile.addReport(report);
 	}
 }

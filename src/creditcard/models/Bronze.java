@@ -27,4 +27,9 @@ public class Bronze extends CreditCardAccount{
     public String getAccountType() {
         return CreditCardAccount.BRONZE;
     }
+
+    @Override
+    public double getMp() {
+        return minimumPayment;
+    }
 }

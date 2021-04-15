@@ -24,6 +24,11 @@ public class Gold extends CreditCardAccount{
     }
 
     @Override
+    public double getMp() {
+        return minimumPayment;
+    }
+
+    @Override
     public String getAccountType() {
         return CreditCardAccount.GOLD;
     }

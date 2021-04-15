@@ -27,4 +27,8 @@ public class Silver extends CreditCardAccount{
     public String getAccountType() {
         return CreditCardAccount.SILIVER;
     }
+    @Override
+    public double getMp() {
+        return minimumPayment;
+    }
 }

@@ -16,7 +16,7 @@ public abstract class Controller implements ActionListener {
 	}
 
 	protected void report(){
-//		TODO
+
 	}
 
 	protected abstract void deposit(IEntry entry, Account account);

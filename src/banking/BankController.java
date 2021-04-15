@@ -138,7 +138,7 @@ public class BankController extends Controller {
 			dep.setBounds(430, 15, 275, 140);
 			dep.show();
 
-			IEntry entry = new Entry(this.bank.amountDeposit, LocalDate.now());
+			IEntry entry = new Entry(this.bank.amountDeposit, LocalDate.now(), IEntry.DEPOSIT);
 			Account account = this.bank.getAccFile().get((Account a) -> a.getId().equals(accnr));
 			deposit(entry, account);
 		}
@@ -158,7 +158,7 @@ public class BankController extends Controller {
 			wd.setBounds(430, 15, 275, 140);
 			wd.show();
 
-			IEntry entry = new Entry(this.bank.amountDeposit, LocalDate.now());
+			IEntry entry = new Entry(this.bank.amountDeposit, LocalDate.now(), IEntry.WITHDRAW);
 			Account account = this.bank.getAccFile().get((Account a) -> a.getId().equals(accnr));
 			withdraw(entry, account);
 		}

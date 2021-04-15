@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public abstract class ACCFile implements Observable {
-	protected List<Account> accounts;
+	public List<Account> accounts;
 	protected List<Observer> observers=new ArrayList<>();
 
 	public ACCFile() {
@@ -42,6 +44,10 @@ public abstract class ACCFile implements Observable {
 		for (Account account : accounts) {
 			consumer.accept(account);
 		}
+	}
+
+	public List<Account> filter(Predicate<Account> predicate) {
+		return this.accounts.stream().filter(predicate).collect(Collectors.toList());
 	}
 
 	public Account get(Predicate<Account> predicate) {

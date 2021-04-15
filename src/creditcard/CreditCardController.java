@@ -7,6 +7,7 @@ import creditcard.models.CreditCardAccountFactory;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
 import framework.controllers.commands.*;
+import framework.controllers.commands.AbstractAction;
 import framework.controllers.results.IResult;
 import framework.controllers.ruleengine.AbstractAssessor;
 import framework.controllers.ruleengine.IProperty;
@@ -52,6 +53,14 @@ public class CreditCardController extends Controller {
         System.out.println("Withdraw Report Added :\n" + this.creditCard.getRepFile().toString());
         this.creditCard.getAccFile().updateAccount(account);
         // Todo :: notify rule
+    }
+
+    protected void report(){
+        AbstractAction report = new Report(this.creditCard.getRepFile(), this.creditCard.getAccFile());
+        IResult result = this.commandManager.submit(report);
+                JDialogGenBill billFrm = new JDialogGenBill((String) result.getValue());
+        billFrm.setBounds(450, 20, 400, 350);
+        billFrm.show();
     }
 
     @Override
@@ -103,9 +112,9 @@ public class CreditCardController extends Controller {
     }
 
     void JButtonGenerateBill_actionPerformed(ActionEvent event) {
-        JDialogGenBill billFrm = new JDialogGenBill();
-        billFrm.setBounds(450, 20, 400, 350);
-        billFrm.show();
+
+        report();
+
 
     }
 
@@ -122,7 +131,7 @@ public class CreditCardController extends Controller {
             dep.show();
 
             // compute new amount
-            IEntry entry = new Entry(this.creditCard.amountDeposit, LocalDate.now());
+            IEntry entry = new Entry(this.creditCard.amountDeposit, LocalDate.now(), IEntry.DEPOSIT);
             Account account = this.creditCard.getAccFile().get((Account a) -> a.getId().equals(cc_number));
             deposit(entry, account);
         }
@@ -141,7 +150,7 @@ public class CreditCardController extends Controller {
             wd.show();
 
             //  Todo :: Withdraw logic and compute new amount
-            IEntry entry = new Entry(this.creditCard.amountDeposit, LocalDate.now());
+            IEntry entry = new Entry(this.creditCard.amountDeposit, LocalDate.now(), IEntry.WITHDRAW);
             Account account = this.creditCard.getAccFile().get((Account a) -> a.getId().equals(cc_number));
             withdraw(entry, account);
         }

@@ -3,6 +3,15 @@ package framework.controllers.results;
 import framework.controllers.results.IResult;
 
 public class DoneResult implements IResult {
+
+	Object value;
+
+	public DoneResult() {
+
+	}
+	public DoneResult(Object value) {
+		this.value = value;
+	}
 	@Override
 	public String getMessage() {
 		return CurrentBalance.SUCCESS; // TODO Do something else!
@@ -10,6 +19,10 @@ public class DoneResult implements IResult {
 
 	@Override
 	public Object getValue() {
-		return null;
+		return value;
+	}
+
+	public void setValue(Object value) {
+		this.value = value;
 	}
 }

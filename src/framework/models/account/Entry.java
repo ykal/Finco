@@ -5,10 +5,12 @@ import java.time.LocalDate;
 public class Entry implements IEntry{
 	private double amount;
 	private LocalDate date;
+	private String entryType;
 
-	public Entry(double amount, LocalDate date) {
+	public Entry(double amount, LocalDate date, String entryType) {
 		this.amount = amount;
 		this.date = date;
+		this.entryType = entryType;
 	}
 
 	@Override
@@ -19,6 +21,11 @@ public class Entry implements IEntry{
 	@Override
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+
+	@Override
+	public String getEntryType() {
+		return this.entryType ;
 	}
 
 	@Override
