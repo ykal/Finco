@@ -1,130 +1,115 @@
 package framework;
 
+import banking.BankController;
+import banking.persistance.BankAccFile;
+import framework.View;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
 import framework.models.Data;
+import framework.observer.Observer;
+import framework.persistence.ACCFile;
+import framework.persistence.CUSFile;
+import framework.persistence.REPFile;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
-public class FinCo extends JFrame{
-	private Controller controller;
+public class FinCo implements Observer {
 
-	private Data model;
-	private JTable JTable1;
-	private JScrollPane JScrollPane1;
+	Data model;
+	View view;
+	Controller controller;
+	CommandManager commandManager;
+	REPFile repFile;
+	ACCFile accFile;
+	CUSFile cusFile;
 
-	FinCo parentFrame;
-	JPanel JPanel1 = new JPanel();
-	JButton JButton_Exit = new JButton();
-
-	public FinCo (String title, DefaultTableModel model){
-		this.parentFrame = this;
-
-		/**
-		 * setup the main panel
-		 * - title
-		 * - main panel
-		 * - panel size
-		 * - scroll pane
-		 */
-		setTitle(title);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		getContentPane().setLayout(new BorderLayout(0, 0));
-		setSize(575, 310);
-		setVisible(false);
-		JTable1 = new JTable(model);
-		JPanel1.setLayout(null);
-		getContentPane().add(BorderLayout.CENTER, JPanel1);
-		JPanel1.setBounds(0, 0, 580, 320);
-		JScrollPane1 = new JScrollPane();
-		JPanel1.add(JScrollPane1);
-		JScrollPane1.setBounds(12, 92, 444, 160);
-		JScrollPane1.getViewport().add(JTable1);
-		JTable1.setBounds(0, 0, 420, 0);
-
-		// Exit button
-		JButton_Exit.setText("Exit");
-		JButton_Exit.setBounds(468, 248, 96, 33);
-		JPanel1.add(JButton_Exit);
-		JButton_Exit.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				exitApplication();
-			}
-		});
-
-		// Window action listener
-		SymWindow aSymWindow = new SymWindow();
-		this.addWindowListener(aSymWindow);
+	public FinCo(String title, Data dataModel) {
+		commandManager = new CommandManager();
+		repFile = new REPFile();
+		cusFile = new CUSFile();
+		this.model = dataModel;
+		populateModelColumns(model);
+		view = new View(title, model);
+		addOperationButtons(view, dataModel);
+		if( accFile != null)accFile.attach(this);
 	}
 
-	class SymWindow extends java.awt.event.WindowAdapter {
-		public void windowClosing(WindowEvent event) {
-			Object object = event.getSource();
-			if (object == this)
-				BankFrm_windowClosing(event);
-		}
+	public Controller getController() {
+		return controller;
 	}
 
-	void BankFrm_windowClosing(WindowEvent event) {
-		// to do: code goes here.
-
-		BankFrm_windowClosing_Interaction1(event);
+	public CommandManager getCommandManager() {
+		return commandManager;
 	}
 
-	void BankFrm_windowClosing_Interaction1(WindowEvent event) {
-		try {
-			this.exitApplication();
-		} catch (Exception e) {
-		}
+	public REPFile getRepFile() {
+		return repFile;
 	}
 
-	void exitApplication() {
-		try {
-			this.setVisible(false); // hide the Frame
-			this.dispose(); // free the system resources
-			System.exit(0); // close the application
-		} catch (Exception e) {
-		}
+	public ACCFile getAccFile() {
+		return accFile;
 	}
 
-	public void start() {
-		try {
-			// Add the following code if you want the Look and Feel
-			// to be set to the Look and Feel of the native system.
-
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (Exception e) {
-			}
-
-			// Create a new instance of our application's frame, and make it visible.
-			this.setVisible(true);
-		} catch (Throwable t) {
-			t.printStackTrace();
-			// Ensure the application exits with an error condition.
-			System.out.println(t.getMessage() + "Error");
-			System.exit(1);
-		}
+	public CUSFile getCusFile() {
+		return cusFile;
 	}
 
-	public void addComponent(Component component) {
-		this.JPanel1.add(component);
+	public void setView(View view) {
+		this.view = view;
 	}
 
-	public int getTableSelection() {
-		return this.JTable1.getSelectionModel().getMinSelectionIndex();
+	public void setBankController(Controller controller) {
+		this.controller = controller;
 	}
 
-	public void setTableModel(Data data){this.JTable1.setModel(data);}
+	public void setCommandManager(CommandManager commandManager) {
+		this.commandManager = commandManager;
+	}
 
-	public static void main(String[] args) {
-		FinCo app = new FinCo("Finco", new DefaultTableModel());
-		app.start();
+	public void setRepFile(REPFile repFile) {
+		this.repFile = repFile;
+	}
+
+	public void setAccFile(ACCFile accFile) {
+		this.accFile = accFile;
+		this.accFile.attach(this);
+	}
+
+	public void setCusFile(CUSFile cusFile) {
+		this.cusFile = cusFile;
+	}
+
+	public void populateModelColumns(Data model) {
+		model.addColumn("AccountNr");
+		model.addColumn("Email");
+	}
+
+	static public void main(String args[]){
+		(new FinCo("FinCo Application", new Data())).view.start();
+	}
+
+	public View getView() {
+		return  this.view;
+	}
+
+	public Data getModel() {
+		return this.model;
+	}
+
+	public void setModel(Data model) {
+		this.model = model;
+	}
+
+	private void addOperationButtons(View view, DefaultTableModel model) {
+		// Todo:: add default buttons
+	}
+
+	@Override
+	public void update(Data data) {
+		System.out.println("update is called \n" + data.toString());
+		this.model = data;
+		this.view.setTableModel(data);
 	}
 }
+

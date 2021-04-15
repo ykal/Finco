@@ -1,23 +1,23 @@
 package banking.persistance;
 
-import banking.Bank;
+import framework.FinCo;
 import framework.models.Data;
 import framework.models.account.Account;
 import framework.observer.Observer;
 import framework.persistence.ACCFile;
 
 public class BankAccFile extends ACCFile {
-	Bank bank;
+	FinCo app;
 
-	public BankAccFile(Bank bank) {
-		this.bank = bank;
+	public BankAccFile(FinCo app) {
+		this.app = app;
 	}
 
 	@Override
 	public void notifyObservers() {
 		System.out.println("Notify is called");
 		Data data = new Data();
-		bank.populateModelColumns(data);
+		app.populateModelColumns(data);
 		accounts.forEach(account ->
 				data.addRow(new Object[]{account.getId(),
 						account.getOwner().getEmail(),
