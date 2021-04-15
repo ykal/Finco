@@ -6,10 +6,7 @@ import banking.models.BankingAccountFactory;
 import creditcard.models.CreditCardAccountFactory;
 import framework.controllers.CommandManager;
 import framework.controllers.Controller;
-import framework.controllers.commands.ENotify;
-import framework.controllers.commands.LoggableAction;
-import framework.controllers.commands.Proxy;
-import framework.controllers.commands.Withdraw;
+import framework.controllers.commands.*;
 import framework.controllers.results.IResult;
 import framework.controllers.ruleengine.AbstractAssessor;
 import framework.controllers.ruleengine.IProperty;
@@ -38,7 +35,13 @@ public class CreditCardController extends Controller {
 
     @Override
     protected void deposit(IEntry entry, Account account) {
-        // Todo
+        LoggableAction deposit = new Deposit(entry, account);
+        System.out.println("Empty Reports :\n" + this.creditCard.getRepFile().toString());
+        deposit = new Proxy(deposit, this.creditCard.getRepFile());
+        IResult result = commandManager.submit(deposit);
+        System.out.println("Deposite Report Added :\n" + this.creditCard.getRepFile().toString());
+        this.creditCard.getAccFile().updateAccount(account);
+        // Todo :: notify rule (if any)
     }
 
     @Override
@@ -48,6 +51,7 @@ public class CreditCardController extends Controller {
         IResult result = commandManager.submit(withdraw);
         System.out.println("Withdraw Report Added :\n" + this.creditCard.getRepFile().toString());
         this.creditCard.getAccFile().updateAccount(account);
+        // Todo :: notify rule
     }
 
     @Override
@@ -109,6 +113,7 @@ public class CreditCardController extends Controller {
         // get selected name
         int selection = this.creditCard.getView().getTableSelection();
         if (selection >= 0) {
+            String cc_number = (String) this.creditCard.getModel().getValueAt(selection, 1);
             String name = (String) this.creditCard.getModel().getValueAt(selection, 0);
 
             // Show the dialog for adding deposit amount for the current mane
@@ -117,7 +122,9 @@ public class CreditCardController extends Controller {
             dep.show();
 
             // compute new amount
-           // Todo :: Deposit logic
+            IEntry entry = new Entry(this.creditCard.amountDeposit, LocalDate.now());
+            Account account = this.creditCard.getAccFile().get((Account a) -> a.getId().equals(cc_number));
+            deposit(entry, account);
         }
     }
 
